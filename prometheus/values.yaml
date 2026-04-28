@@ -1,0 +1,42 @@
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ['alertname', 'deployment']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 1h
+      receiver: 'sns'
+    receivers:
+    - name: 'null'
+    - name: 'sns'
+      sns_configs:
+      - topic_arn: "arn:aws:sns:ap-south-2:793826055984:datadog-alerts-topic"
+        sigv4:
+          region: "ap-south-2"
+        subject: "SRE Bot Alert: Target App Deployment Failed"
+        # Alertmanager will send the JSON payload to SNS, which forwards to SQS
+
+# Disable Heavy Components to save RAM on t3.micro nodes
+grafana:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        memory: 100Mi
+      limits:
+        memory: 300Mi
+# Disable Node Exporter to save 1 pod slot per node!
+nodeExporter:
+  enabled: false
+
+prometheus-node-exporter:
+  resources:
+    limits:
+      memory: 50Mi
+kube-state-metrics:
+  resources:
+    limits:
+      memory: 50Mi

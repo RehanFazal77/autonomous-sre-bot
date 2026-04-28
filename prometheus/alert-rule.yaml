@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sre-bot-deployment-alerts
+  namespace: default
+  labels:
+    release: prometheus # Must match the helm release name
+spec:
+  groups:
+  - name: sre-bot.rules
+    rules:
+    - alert: DeploymentFailed
+      expr: kube_deployment_status_replicas_available{deployment="target-app"} < 2
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Target App Deployment Failed"
+        description: "The target-app deployment has less than 2 replicas available."
+        action_required: "scale_up"

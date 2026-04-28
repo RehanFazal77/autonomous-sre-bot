@@ -12,13 +12,17 @@ module "eks" {
   # Cluster access entry
   # To add the current caller identity as administrator
   enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access = true
 
   eks_managed_node_groups = {
     initial = {
-      instance_types = ["t3.medium"]
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+      instance_types = ["t3.micro"]
+      min_size     = 2
+      max_size     = 5
+      desired_size = 5
+      iam_role_additional_policies = {
+        sns = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+      }
     }
   }
 
