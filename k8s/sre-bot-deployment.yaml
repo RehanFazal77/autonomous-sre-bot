@@ -5,7 +5,7 @@ metadata:
   namespace: default
   annotations:
     # This ARN will be created by Terraform in Phase 1
-    eks.amazonaws.com/role-arn: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/sre-bot-sqs-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::793826055984:role/sre-bot-sqs-role
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -47,9 +47,9 @@ spec:
       serviceAccountName: sre-bot-sa
       containers:
       - name: sre-bot
-        image: rehanfazal/sre-bot:latest # Replace with your Dockerhub username
+        image: rehanfazal47/sre-bot:latest # Replace with your Dockerhub username
         env:
         - name: SQS_QUEUE_URL
-          value: "REPLACE_WITH_YOUR_SQS_URL"
+          value: "https://sqs.ap-south-2.amazonaws.com/793826055984/sre-remediation-queue"
         - name: AWS_REGION
           value: "ap-south-2"
