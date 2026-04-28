@@ -79,5 +79,4 @@ kube-system   kube-proxy-fmqz7                                         1/1     R
 kube-system   kube-proxy-gz9mj                                         1/1     Running   0          98m
 kube-system   kube-proxy-r7smn                                         1/1     Running   0          3h25m
 kube-system   kube-proxy-xfb7s                                         1/1     Running   0          3h25m
-rehan-fazal@rehan-fazal-IdeaPad-Gaming-3-15IHU6:~/Desktop/Techolution/GITHUB/autonomous-sre-bot/scripts$ 
 ```
