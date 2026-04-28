@@ -1,0 +1,28 @@
+datadog:
+  apiKey: "SET_YOUR_DATADOG_API_KEY_HERE"
+  appKey: "SET_YOUR_DATADOG_APP_KEY_HERE"
+  
+  # Enable log collection
+  logs:
+    enabled: true
+    containerCollectAll: true
+
+  # Enable APM and tracing
+  apm:
+    portEnabled: true
+
+  # Enable process collection
+  processAgent:
+    enabled: true
+    processCollection: true
+
+clusterAgent:
+  enabled: true
+  
+  # Enable Kubernetes State Metrics Core
+  metricsProvider:
+    enabled: true
+
+# Enable kube-state-metrics
+kubeStateMetricsCore:
+  enabled: true

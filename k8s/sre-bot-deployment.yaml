@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sre-bot-sa
+  namespace: default
+  annotations:
+    # This ARN will be created by Terraform in Phase 1
+    eks.amazonaws.com/role-arn: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/sre-bot-sqs-role
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sre-bot-role
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch", "update", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sre-bot-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: sre-bot-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: sre-bot-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sre-bot
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sre-bot
+  template:
+    metadata:
+      labels:
+        app: sre-bot
+    spec:
+      serviceAccountName: sre-bot-sa
+      containers:
+      - name: sre-bot
+        image: rehanfazal/sre-bot:latest # Replace with your Dockerhub username
+        env:
+        - name: SQS_QUEUE_URL
+          value: "REPLACE_WITH_YOUR_SQS_URL"
+        - name: AWS_REGION
+          value: "ap-south-2"
