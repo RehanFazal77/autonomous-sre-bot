@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: target-app
-        image: rehanfazal/target-app:latest # Replace with your Dockerhub username
+        image: rehanfazal47/target-app:latest # Replace with your Dockerhub username
         ports:
         - containerPort: 8080
         resources:
