@@ -5,7 +5,7 @@ import time
 from kubernetes import client, config
 
 # Configuration
-REGION = os.environ.get("AWS_REGION", "us-east-1")
+REGION = os.environ.get("AWS_REGION", "ap-south-2")
 QUEUE_URL = os.environ.get("SQS_QUEUE_URL")
 TARGET_DEPLOYMENT = os.environ.get("TARGET_DEPLOYMENT", "target-app")
 TARGET_NAMESPACE = os.environ.get("TARGET_NAMESPACE", "default")
